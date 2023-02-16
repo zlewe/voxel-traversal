@@ -227,4 +227,10 @@ template bool traverseVoxelGrid<long double>(
     const Ray<long double>&, Grid3DTraversalCounter<long double>&,
     long double t0, long double t1);
 
+template bool detail::traverseSingle<double>(
+    Grid3DSpatialDef<double>::Size3d& tmax,
+    Grid3DSpatialDef<double>::Index3d& current_index,
+    const Grid3DSpatialDef<double>::Index3d& overflow_index,
+    const Grid3DSpatialDef<double>::Index3d& step_index,
+    const Grid3DSpatialDef<double>::Size3d& delta);
 }  // namespace voxel_traversal

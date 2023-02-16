@@ -5,6 +5,7 @@
 #include <pybind11/pybind11.h>
 
 #include "grid.h"
+#include "raycast.cpp"
 
 namespace pytraversal {
 

@@ -25,6 +25,21 @@ py::array_t<int64_t, py::array::c_style> traverse(
   }
 }
 
+py::array_t<double_t, py::array::c_style> traverse_once(
+    RayTracingObject& rt) {
+
+  grid_type::Vector3d current_index{};
+  const bool hit = rt.traverseOnce(current_index);
+
+  if (hit) {
+    return py::cast(current_index);
+  } else {
+    // make sure to return empty array with correct shape [0, 3]
+    const py::array::ShapeContainer shape({0, 3});
+    return py::array_t<double_t, py::array::c_style>(shape);
+  }
+}
+
 }  // namespace pytraversal
 
 PYBIND11_MODULE(pytraversal, m) {
@@ -36,4 +51,11 @@ PYBIND11_MODULE(pytraversal, m) {
       .def(py::init<const grid_type::Vector3d&, const grid_type::Vector3d&,
                     const grid_type::Index3d&>())
       .def("traverse", traverse);
+  
+  py::class_<RayTracingObject>(m, "RTObj")
+      .def(py::init<>())
+      .def(py::init<const grid_type::Vector3d&, const grid_type::Vector3d&, const grid_type::Index3d&>())
+      .def("setup", &RayTracingObject::setup)
+      .def("traverse_once", traverse_once)
+      .def("reset", &RayTracingObject::reset);
 }

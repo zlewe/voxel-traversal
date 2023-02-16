@@ -6,6 +6,24 @@
 
 namespace voxel_traversal {
 
+namespace detail {
+    template <typename Grid>
+    bool setupTraversal(const Ray<typename Grid::float_t>& ray, const Grid& grid,
+                        typename Grid::float_t t0, typename Grid::float_t t1,
+                        typename Grid::Size3d& delta, typename Grid::Size3d& tmax,
+                        typename Grid::Index3d& step_index,
+                        typename Grid::Index3d& current_index,
+                        typename Grid::Index3d& final_index);
+                        
+    template <typename float_type>
+    bool traverseSingle(
+        typename Grid3DSpatialDef<float_type>::Size3d& tmax,
+        typename Grid3DSpatialDef<float_type>::Index3d& current_index,
+        const typename Grid3DSpatialDef<float_type>::Index3d& overflow_index,
+        const typename Grid3DSpatialDef<float_type>::Index3d& step_index,
+        const typename Grid3DSpatialDef<float_type>::Size3d& delta);                  
+}
+
 //! Type to record the indices of traversed voxels
 template <typename float_type>
 using TraversedVoxels =
