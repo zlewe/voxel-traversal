@@ -40,6 +40,18 @@ py::array_t<double_t, py::array::c_style> traverse_once(
   }
 }
 
+py::array_t<double_t, py::array::c_style> get_tmax(
+    RayTracingObject& rt) {
+
+  return py::cast(rt.buff.tmax);
+}
+
+py::array_t<double_t, py::array::c_style> get_delta(
+    RayTracingObject& rt) {
+
+  return py::cast(rt.buff.delta);
+}
+
 }  // namespace pytraversal
 
 PYBIND11_MODULE(pytraversal, m) {
@@ -55,6 +67,8 @@ PYBIND11_MODULE(pytraversal, m) {
   py::class_<RayTracingObject>(m, "RTObj")
       .def(py::init<>())
       .def(py::init<const grid_type::Vector3d&, const grid_type::Vector3d&, const grid_type::Index3d&>())
+      .def("get_tmax", get_tmax)
+      .def("get_delta", get_delta)
       .def("setup", &RayTracingObject::setup)
       .def("traverse_once", traverse_once)
       .def("reset", &RayTracingObject::reset);
